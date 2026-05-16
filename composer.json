@@ -1,0 +1,51 @@
+{
+    "name": "ardith666/qris-manual-helper",
+    "description": "Bundle PHP plug-n-play untuk membuat QRIS dinamis bernominal dari payload QRIS statis.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ardith666",
+            "homepage": "https://github.com/ardith666"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ardith666\\QrisManualHelper\\": "src/"
+        },
+        "classmap": [
+            "src/"
+        ],
+        "files": [
+            "src/autoload.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ardith666\\QrisManualHelper\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "php tests/smoke.php",
+        "lint": "php -l src/QrisService.php && php -l src/QrisValidator.php && php -l src/QrisException.php && php -l src/autoload.php"
+    },
+    "keywords": [
+        "qris",
+        "payment",
+        "indonesia",
+        "qr-code",
+        "static-qr",
+        "dynamic-qr",
+        "qrismandiri"
+    ],
+    "homepage": "https://github.com/ardith666/QRis-Manual-Helper",
+    "support": {
+        "issues": "https://github.com/ardith666/QRis-Manual-Helper/issues"
+    }
+}

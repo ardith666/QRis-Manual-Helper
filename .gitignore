@@ -1,0 +1,54 @@
+# OS/editor
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs/temp/cache
+*.log
+logs/
+tmp/
+temp/
+.cache/
+cache/
+
+# Env/secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+secrets/
+credentials/
+
+# Composer/vendor deps if user adds them later
+/vendor/
+composer.lock
+
+# Runtime/generated QR/test output
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+*.pdf
+output/
+build/
+dist/
+
+# DB/backups
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+backup/
+backups/
