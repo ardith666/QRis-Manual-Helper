@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QRIS Manual Overlay Preview</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 32px auto; padding: 0 16px; }
+    textarea, input { width: 100%; box-sizing: border-box; margin: 8px 0 16px; }
+    textarea { min-height: 110px; }
+    button { padding: 10px 14px; border: 0; border-radius: 10px; background: #003e5c; color: white; cursor: pointer; }
+    .card { border: 1px solid #ddd; border-radius: 18px; padding: 20px; }
+    #qris-preview { margin-top: 20px; text-align: center; }
+    .hint { color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>QRIS Manual Overlay Preview</h1>
+  <p class="hint">Generate payload QRIS dinamis dari PHP, lalu render di browser dengan logo overlay fleksibel.</p>
+
+  <div class="card">
+    <label>Dynamic QRIS payload</label>
+    <textarea id="payload" placeholder="Tempel payload hasil QrisService::generateDynamic(...) di sini"></textarea>
+
+    <label>Logo URL / favicon / app logo</label>
+    <input id="logo-url" placeholder="/assets/logo.png atau https://example.com/logo.png">
+
+    <label>Atau upload logo lokal</label>
+    <input id="logo-file" type="file" accept="image/*">
+
+    <button id="render">Render Preview</button>
+    <button id="reset" type="button">Reset Logo</button>
+    <span id="status" class="hint"></span>
+
+    <div id="qris-preview"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="../assets/qris-manual-overlay.js"></script>
+  <script>
+    var currentLogo = '';
+    var payloadEl = document.getElementById('payload');
+    var logoUrlEl = document.getElementById('logo-url');
+
+    function render() {
+      QrisManualOverlay.render('#qris-preview', payloadEl.value.trim(), {
+        imageUrl: currentLogo || logoUrlEl.value.trim(),
+        logoSizeRatio: 0.20,
+        correctLevel: 'H',
+        statusTarget: '#status'
+      });
+    }
+
+    document.getElementById('render').addEventListener('click', render);
+    document.getElementById('reset').addEventListener('click', function () {
+      currentLogo = '';
+      logoUrlEl.value = '';
+      document.getElementById('status').textContent = '';
+      render();
+    });
+    QrisManualOverlay.bindUpload('#logo-file', function (dataUrl, file) {
+      currentLogo = dataUrl;
+      document.getElementById('status').textContent = file.name;
+      render();
+    });
+  </script>
+</body>
+</html>

@@ -175,6 +175,65 @@ new QRCode(el, {
 </script>
 ```
 
+## Render QR dengan Image Overlay / Logo Tengah
+
+Core PHP bundle ini tetap fokus generate payload QRIS. Untuk preview QR di browser dengan logo/favicon/app logo di tengah, bundle menyediakan helper opsional:
+
+```text
+assets/qris-manual-overlay.js
+```
+
+Helper ini bekerja bersama `qrcodejs` dan mendukung:
+
+- `imageUrl` / `logoUrl` dari favicon, app logo, CDN, atau data URL upload.
+- `logoSizeRatio` default `0.20` atau 20% sisi QR.
+- background putih rounded di belakang logo.
+- error correction `H` agar QR lebih tahan overlay.
+- upload preview via `FileReader` tanpa upload server.
+
+Contoh HTML:
+
+```html
+<div id="qris-preview"></div>
+<input id="qris-logo-upload" type="file" accept="image/*">
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="vendor-local/qris-manual-helper/assets/qris-manual-overlay.js"></script>
+<script>
+  const payload = "HASIL_DARI_QrisService_generateDynamic";
+  let overlayImage = "/assets/favicon.png";
+
+  function renderQris() {
+    QrisManualOverlay.render("#qris-preview", payload, {
+      imageUrl: overlayImage,
+      logoSizeRatio: 0.20,
+      backgroundPadding: 12,
+      correctLevel: "H"
+    });
+  }
+
+  QrisManualOverlay.bindUpload("#qris-logo-upload", function (dataUrl) {
+    overlayImage = dataUrl;
+    renderQris();
+  });
+
+  renderQris();
+</script>
+```
+
+Catatan scan:
+
+- Pakai error correction `H`.
+- Jaga logo sekitar 18–22% dari sisi QR.
+- Selalu test scan setelah mengganti logo.
+- Jangan commit payload QRIS merchant production ke repo public.
+
+Lihat juga:
+
+```text
+examples/overlay-preview.html
+```
+
 ## Render QR via CLI untuk Testing
 
 Jika ada `qrencode`:
